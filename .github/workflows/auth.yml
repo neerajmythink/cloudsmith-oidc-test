@@ -19,9 +19,9 @@ jobs:
               uses: cloudsmith-io/cloudsmith-cli-action@v1
               with:
                   # Your Cloudsmith Organization/Workspace name
-                  oidc-namespace: "your-org-slug"
+                  oidc-namespace: "cloudsmith-org-neeraj"
                   # The slug of the service account created in Step 2A
-                  oidc-service-slug: "github-actions-service"
+                  oidc-service-slug: "service_account"
                   # If true, it just sets the CLOUDSMITH_API_KEY env var
                   oidc-auth-only: "true"
 
