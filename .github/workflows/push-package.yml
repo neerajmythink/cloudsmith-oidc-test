@@ -2,7 +2,7 @@ name: Push Package to Cloudsmith
 
 on:
   push:
-    branches: [ "create_and_push_build" ]
+    branches: [ "main" ]
 
 permissions:
   id-token: write # Mandatory for OIDC
@@ -12,6 +12,7 @@ permissions:
 env:
   CLOUDSMITH_NAMESPACE: ${{ vars.CLOUDSMITH_NAMESPACE }}
   CLOUDSMITH_SERVICE_SLUG: ${{ vars.CLOUDSMITH_SERVICE_SLUG }}
+  CLOUDSMITH_REPO_NAME: 'github-actions-assessment-repo'
 
 jobs:
   push-to-cloudsmith:
@@ -28,4 +29,4 @@ jobs:
 
       - name: Push package to Cloudsmith
         run: |
-          cloudsmith push raw ${{ env.CLOUDSMITH_NAMESPACE }}/github-actions-assessment-repo package.txt
+          cloudsmith push raw ${{ env.CLOUDSMITH_NAMESPACE }}/${{ env.CLOUDSMITH_REPO_NAME }} package.txt
