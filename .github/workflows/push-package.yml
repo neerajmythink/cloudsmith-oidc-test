@@ -28,4 +28,4 @@ jobs:
 
       - name: Push package to Cloudsmith
         run: |
-          cloudsmith push raw ${{ env.CLOUDSMITH_NAMESPACE }}/github-actions-assessment-repo package.txt
+          cloudsmith whoami
