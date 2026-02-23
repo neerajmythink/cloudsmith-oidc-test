@@ -19,13 +19,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
-      - name: Push via Cloudsmith Action
-        uses: cloudsmith-io/github-action@v2
+    
+      - name: Install Cloudsmith CLI
+        uses: cloudsmith-io/cloudsmith-cli-action@v2
         with:
-          oidc: true
-          command: 'push'
-          format: 'raw' 
-          owner: ${{ env.CLOUDSMITH_NAMESPACE }}
-          repo: ${{ env.CLOUDSMITH_SERVICE_SLUG }}
-          file: 'package.txt' # Correct path for your directory structure
+            oidc-namespace: ${{ env.CLOUDSMITH_NAMESPACE }}
+            oidc-service-slug: ${{ env.CLOUDSMITH_SERVICE_SLUG }}
+
+      - name: Push package to Cloudsmith
+        run: |
+          cloudsmith push raw ${{ env.CLOUDSMITH_NAMESPACE }}/github-actions-assessment-repo package.txt
