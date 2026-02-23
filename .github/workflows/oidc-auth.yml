@@ -3,6 +3,9 @@ name: Cloudsmith OIDC Auth
 on:
     push:
         branches: [main]
+env:
+    CLOUDSMITH_NAMESPACE: ${{ vars.CLOUDSMITH_NAMESPACE }}
+    CLOUDSMITH_SERVICE_SLUG: ${{ vars.CLOUDSMITH_SERVICE_SLUG }}
 
 permissions:
     id-token: write # Required for requesting the JWT
@@ -18,18 +21,15 @@ jobs:
             - name: Authenticate with Cloudsmith via OIDC
               uses: cloudsmith-io/cloudsmith-cli-action@v1
               with:
-                  # Your Cloudsmith Organization/Workspace name
-                  oidc-namespace: "cloudsmith-org-neeraj"
-                  # The slug of the service account created in Step 2A
-                  oidc-service-slug: "github-actions-service-zz47"
-                  # If true, it just sets the CLOUDSMITH_API_KEY env var
+                  oidc-namespace: ${{env.CLOUDSMITH_NAMESPACE}}
+                  oidc-service-slug: ${{env.CLOUDSMITH_SERVICE_SLUG}}
                   oidc-auth-only: "true"
 
             - name: Install Cloudsmith CLI
               uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
               with:
-                  oidc-namespace: "cloudsmith-org-neeraj"
-                  oidc-service-slug: "github-actions-service-zz47"
+                  oidc-namespace: ${{env.CLOUDSMITH_NAMESPACE}}
+                  oidc-service-slug: ${{env.CLOUDSMITH_SERVICE_SLUG}}
 
             - name: Verify Authentication
               run: |
