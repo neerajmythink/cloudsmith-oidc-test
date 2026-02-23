@@ -2,15 +2,16 @@ name: Push Package to Cloudsmith
 
 on:
   push:
-    branches: [ "main" ]
-
-env:
-    CLOUDSMITH_NAMESPACE: ${{ vars.CLOUDSMITH_NAMESPACE }}
-    CLOUDSMITH_SERVICE_SLUG: ${{ vars.CLOUDSMITH_SERVICE_SLUG }}
+    branches: [ "create_and_push_build" ]
 
 permissions:
   id-token: write # Mandatory for OIDC
   contents: read  # Required to checkout the repo
+
+# Define these so the ${{ env.VARIABLE }} syntax works
+env:
+  CLOUDSMITH_NAMESPACE: ${{ vars.CLOUDSMITH_NAMESPACE }}
+  CLOUDSMITH_SERVICE_SLUG: ${{ vars.CLOUDSMITH_SERVICE_SLUG }}
 
 jobs:
   push-to-cloudsmith:
@@ -20,11 +21,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Push via Cloudsmith Action
-        uses: cloudsmith-io/github-action@v2
+        uses: cloudsmith-io/github-action@v0.7.0 # Fixed version tag
         with:
           oidc: true
           command: 'push'
           format: 'raw' 
           owner: ${{ env.CLOUDSMITH_NAMESPACE }}
           repo: ${{ env.CLOUDSMITH_SERVICE_SLUG }}
-          file: 'package.txt'
+          file: 'package.txt' # Correct path for your directory structure
