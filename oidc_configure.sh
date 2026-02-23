@@ -3,7 +3,6 @@
 # Task 1: Create an empty project and configure OIDC
 # Get familiar with how Github actions work, this video should give you the basis and jumping ground to complete this task, you can also find out more by following the quickstart guide from Github. Once comfortable with running Github actions, you should then configure the OIDC connection and authenticate to Cloudsmith.
 
-
 export NAMESPACE="cloudsmith-org-neeraj" # Replace with your actual namespace
 export API_KEY=$CLOUDSMITH_API_KEY # Ensure you have set the CLOUDSMITH_API_KEY environment variable with your API key
 export REPO_NAME="github-actions-assessment-repo" # You can change the repository name as needed
@@ -12,11 +11,11 @@ export REPO_DESC="This is a test repository created using cloudsmith API for git
 export SERVICE_NAME="github-actions-service" # Name for the service account to be created
 export SERVICE_DESC="This is a test service account created using cloudsmith API for github-actions-assessment"
 
-export OIDC_PROVIDER="https://token.actions.githubusercontent.com"
-export OIDC_NAME="github-actions-openid"
-export OIDC_CLAIM='{"repository_owner":"neerajmythink"}'
+export OIDC_NAME="github-actions-openid" # Name for the OIDC provider to be created
+export OIDC_PROVIDER="https://token.actions.githubusercontent.com" # OIDC provider URL for GitHub Actions, this is a well-known URL that GitHub uses for OIDC tokens
+export OIDC_CLAIM='{"repository_owner":"neerajmythink"}' # Replace "neerajmythink" with your actual GitHub username or organization name, this claim will be used to restrict access to the OIDC provider based on the repository owner
 
-# function to create a repository
+# function to create a repository in Cloudsmith
 create_repo() {
   curl -sS\
     --request POST \
@@ -32,7 +31,7 @@ create_repo() {
     }' | jq '.slug_perm'
 }
 
-# function to add service account to the namespace
+# function to add service account to the namespace in Cloudsmith
 add_service_account() {
   curl -sS\
     --request POST \
