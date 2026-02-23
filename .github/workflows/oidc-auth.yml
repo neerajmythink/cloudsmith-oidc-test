@@ -19,14 +19,14 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Authenticate with Cloudsmith via OIDC
-              uses: cloudsmith-io/cloudsmith-cli-action@v1
+              uses: cloudsmith-io/cloudsmith-cli-action@v2
               with:
                   oidc-namespace: ${{env.CLOUDSMITH_NAMESPACE}}
                   oidc-service-slug: ${{env.CLOUDSMITH_SERVICE_SLUG}}
                   oidc-auth-only: "true"
 
             - name: Install Cloudsmith CLI
-              uses: cloudsmith-io/cloudsmith-cli-action@v1.0.3
+              uses: cloudsmith-io/cloudsmith-cli-action@v2
               with:
                   oidc-namespace: ${{env.CLOUDSMITH_NAMESPACE}}
                   oidc-service-slug: ${{env.CLOUDSMITH_SERVICE_SLUG}}
