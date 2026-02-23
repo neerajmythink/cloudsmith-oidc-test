@@ -1,0 +1,30 @@
+name: Push Package to Cloudsmith
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+    CLOUDSMITH_NAMESPACE: ${{ vars.CLOUDSMITH_NAMESPACE }}
+    CLOUDSMITH_SERVICE_SLUG: ${{ vars.CLOUDSMITH_SERVICE_SLUG }}
+
+permissions:
+  id-token: write # Mandatory for OIDC
+  contents: read  # Required to checkout the repo
+
+jobs:
+  push-to-cloudsmith:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Push via Cloudsmith Action
+        uses: cloudsmith-io/github-action@v2
+        with:
+          oidc: true
+          command: 'push'
+          format: 'raw' 
+          owner: ${{ env.CLOUDSMITH_NAMESPACE }}
+          repo: ${{ env.CLOUDSMITH_SERVICE_SLUG }}
+          file: 'package.txt'
