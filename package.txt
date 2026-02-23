@@ -1,0 +1,1 @@
+a sample file to test pushing a package to Cloudsmith via OIDC authentication in GitHub Actions.
