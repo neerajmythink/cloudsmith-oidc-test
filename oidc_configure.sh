@@ -47,6 +47,26 @@ add_service_account() {
             ' | jq -r '.slug'
 }
 
+# function to add privileges to the repository for service account
+add_service_account_privileges() {
+  curl -sS\
+    --request PATCH \
+    --url https://api.cloudsmith.io/repos/${NAMESPACE}/${REPO_NAME}/privileges \
+    --header 'accept: application/json' \
+    --header 'content-type: application/json' \
+    --header "X-Api-Key: ${API_KEY}" \
+    --data '
+            {
+              "privileges": [
+                {
+                  "privilege": "Write",
+                  "service": "'${SERVICE_SLUG}'"
+                }
+              ]
+            }
+            '
+}
+
 # function to create an OIDC provider in Cloudsmith
 oidc_create() {
   curl -sS\
@@ -74,6 +94,9 @@ SERVICE_SLUG=$(add_service_account)
 export SERVICE_SLUG
 echo 2. Service account created with service slug as: "${SERVICE_SLUG}"
 
+add_service_account_privileges
+echo 3. Privileges added to the service account for the repository
+
 OPENID_SLUG=$(oidc_create)
 export OPENID_SLUG
-echo 3. OpenID connect created with slug_perm as: "${OPENID_SLUG}"
+echo 4. OpenID connect created with slug_perm as: "${OPENID_SLUG}"
