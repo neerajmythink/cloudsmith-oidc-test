@@ -1,0 +1,48 @@
+name: Build and Push Package to Cloudsmith
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write # Mandatory for OIDC
+  contents: read  # Required to checkout the repo
+
+# Define these so the ${{ env.VARIABLE }} syntax works
+env:
+  CLOUDSMITH_NAMESPACE: ${{ vars.CLOUDSMITH_NAMESPACE }}
+  CLOUDSMITH_SERVICE_SLUG: ${{ vars.CLOUDSMITH_SERVICE_SLUG }}
+  CLOUDSMITH_REPO_NAME: 'github-actions-assessment-repo'
+
+jobs:
+  push-to-cloudsmith:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Build Tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+
+      - name: Build Package
+        # This creates .whl and .tar.gz files in the dist/ folder
+        working-directory: ./python_package
+        run: python -m build
+    
+      - name: Install Cloudsmith CLI
+        uses: cloudsmith-io/cloudsmith-cli-action@v2
+        with:
+            oidc-namespace: ${{ env.CLOUDSMITH_NAMESPACE }}
+            oidc-service-slug: ${{ env.CLOUDSMITH_SERVICE_SLUG }}
+
+      - name: Push package to Cloudsmith
+        working-directory: ./python_package
+        run: |
+          cloudsmith push python ${{ env.CLOUDSMITH_NAMESPACE }}/${{ env.CLOUDSMITH_REPO_NAME }} dist/*.tar.gz

@@ -3,19 +3,12 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "my_tool"
-version = "0.0.1"
-authors = [
-  { name="Your Name", email="you@example.com" },
-]
-description = "A small example package"
+name = "my-sample-package" # Name on Cloudsmith
+version = "0.1.0" # Update this for every push
+license = { text = "MIT" }
+description = "A sample package for Cloudsmith"
 readme = "README.md"
-requires-python = ">=3.7"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+requires-python = ">=3.8"
+dependencies = [
+  "requests", # Example dependency
 ]
-
-[tool.setuptools.packages.find]
-where = ["src"]
