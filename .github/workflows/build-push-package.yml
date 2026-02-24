@@ -45,4 +45,4 @@ jobs:
       - name: Push package to Cloudsmith
         working-directory: ./python_package
         run: |
-          cloudsmith push python ${{ env.CLOUDSMITH_NAMESPACE }}/${{ env.CLOUDSMITH_REPO_NAME }} dist/*
+          cloudsmith push python ${{ env.CLOUDSMITH_NAMESPACE }}/${{ env.CLOUDSMITH_REPO_NAME }} dist/*.whl
