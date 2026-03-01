@@ -1,13 +1,20 @@
 ## Task 1: Create an empty project and configure OIDC
-This guide demonstrates how to create an empty project in GitHub and configure OpenID Connect (OIDC) for secure authentication with Cloudsmith.
+This guide demonstrates how to create an empty project in GitHub and configure OpenID Connect (OIDC) for secure authentication with Cloudsmith. This setup allows GitHub Actions to authenticate with Cloudsmith using OIDC, enabling secure interactions without the need for long-lived credentials. Using this we can securely push packages to Cloudsmith from GitHub Actions workflows.
+
 ### Steps to Create a Project and Configure OIDC
-- Create a Cloudsmith account if you don't have one already and get neccessary details like `CLOUDSMITH_NAMESPACE` and  `CLOUDSMITH_API_KEY`.
-- Run the `oidc_configure.sh` script to set up OIDC authentication with Cloudsmith. This script will create 1. a repository in Cloudsmith, 2. a service account, 3. an OpenID Connect provider, and 4. assign the necessary permissions for the service account to interact with the repository.
-- Create a new repository in GitHub. You can name it something like `cloudsmith-oidc-test`.
-- Add the necessary secrets to your GitHub repository. Go to the repository settings, navigate to the "Secrets and variables" section, and add the following secrets:
-  - `CLOUDSMITH_NAMESPACE`: Your Cloudsmith namespace.
-  - `CLOUDSMITH_REPO_NAME`: The name of the Cloudsmith repository created by the `oidc_configure.sh` script.
-  - `CLOUDSMITH_SERVICE_SLUG`: The slug of the service account created by the `oidc_configure.sh` script.
+- Create a new repository in GitHub in your GitHub account and name it something like `cloudsmith-github-actions-assessment`.
+- Create a Cloudsmith account if you don't have one followed by a creation of a workspace if not already created.
+- Note down the workspace name and create a personal API key for authentication. You will need these values to set up the necessary secrets in your GitHub repository. The secrets you need to add are `CLOUDSMITH_NAMESPACE` and `CLOUDSMITH_API_KEY`.
+- Run the `oidc_configure.sh` script in the root of the repository to set up OIDC authentication for Cloudsmith. This script will create in Cloudsmith:
+  - 1. a repository in Cloudsmith to store your packages.
+  - 2. a service account in Cloudsmith for GitHub Actions to authenticate with OIDC.
+  - 3. an OpenID Connect provider configuration in Cloudsmith for the service account.
+  - 4. assign the necessary permissions for the service account to interact with the repository.
+
+- Go to the created GitHub repository and add the necessary secrets to your GitHub repository. Go to the repository settings, navigate to the "Secrets and variables/Actions/Variables" section, and add the following secrets with name and value as mentioned below:
+  - 1. `CLOUDSMITH_NAMESPACE`= "my_namespace" | Your Cloudsmith namespace created in the Cloudsmith account.
+  - 2. `CLOUDSMITH_SERVICE_SLUG`= "github-actions-service-fvwv" | The slug of the service account created by the `oidc_configure.sh` script.
+
 - In the repository the file named `.github/workflows/oidc-auth.yml`. This file will contain the GitHub Actions workflow for OIDC authentication.
 - do some dummy edits to the file to trigger the workflow.
 - This workflow is configured to run on pushes to the `main` branch. Make sure to push your changes to this branch, this will trigger the workflow and execute the steps to authenticate with Cloudsmith using OIDC as configured in `oidc-auth.yml`.

@@ -95,8 +95,8 @@ export SERVICE_SLUG
 echo 2. Service account created with service slug as: "${SERVICE_SLUG}"
 
 add_service_account_privileges
-echo 3. Privileges added to the service account for the repository
+echo 3. Write Privileges added to the service account "${SERVICE_SLUG}" for the repository name "${REPO_NAME}"
 
 OPENID_SLUG=$(oidc_create)
 export OPENID_SLUG
-echo 4. OpenID connect created with slug_perm as: "${OPENID_SLUG}"
+echo 4. OIDC provider settings created with slug_perm as: "${OPENID_SLUG}" for the service account "${SERVICE_SLUG}"
