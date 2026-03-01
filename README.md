@@ -14,6 +14,18 @@ This section explains how to create a new GitHub project and configure OpenID Co
   - Configure an OpenID Connect provider for the service account.
   - Grant the service account permissions to manage the repository.
 
+- Resource creation and OIDC configuration can also be done using Terraform by applying the `oidc_configure.tf` file, which will achieve the same setup as the shell script.
+  - First, create a Terraform variable file named `terraform.tfvars` in the repository root to provide the required variables for authenticating with Cloudsmith and provisioning resources. You can generate and populate the `terraform.tfvars` file with your Cloudsmith API key and workspace using the following bash commands:
+    ```bash
+    touch terraform.tfvars
+    echo 'cloudsmith_api_key = "your_actual_api_key"' > terraform.tfvars
+    echo 'organization = "your_cloudsmith_workspace"' >> terraform.tfvars
+    ```
+  - Then, apply the Terraform configuration by running the following commands in your terminal:
+    ```bash
+    terraform init
+    terraform apply -auto-approve
+    ```
 - In your GitHub repository, add the following secrets under "Settings" > "Secrets and variables" > "Actions" > "Variables":
   - `CLOUDSMITH_NAMESPACE`: Your Cloudsmith namespace (see `oidc_configure.sh`).
   - `CLOUDSMITH_SERVICE_SLUG`: The slug of the service account created (e.g., "github-actions-service-fvwv") while running the `oidc_configure.sh` script.
