@@ -24,20 +24,16 @@ This section explains how to create a new GitHub project and configure OpenID Co
 ## Task 2: Push a Package Using the Cloudsmith GHA Module
 
 This section describes how to use the Cloudsmith GitHub Actions module to upload a already built package to Cloudsmith.
+
+### Steps to Push a Package
+
+ - To push a package to Cloudsmith, ensure you have a built package (e.g., `csm-cloudsmith-npm-cli-example-1.0.1.tgz`) in the repository root.
+ - In order to make this work, your Cloudsmith account and GitHub repository are already set up with OIDC and permissions as described in Task 1.
  - The workflow defined in `.github/workflows/push-package.yml` is set up to push a package to Cloudsmith when triggered.
- - Ensure you have a built package (e.g. csm-cloudsmith-npm-cli-example-1.0.1.tgz) in the repository root to be uploaded.
  - Make a minor edit to any file in the repository and push your changes to the `main` branch to trigger the workflow. This will start the workflow action and upload the package to Cloudsmith using the OIDC authentication configured in Task 1.
  - Check the Actions tab to verify the workflow ran and the package was pushed successfully.
  - You can also log in to your Cloudsmith account and navigate to the repository to confirm that the package was uploaded correctly.
 
-### Steps to Push a Package
-
-- With Cloudsmith already set up from Task 1, you can proceed to package upload.
-- Place a built package (e.g., a `package.txt` file) in the repository root.
-- Ensure OIDC and permissions are configured as described in Task 1.
-- Make a minor edit to the package file to trigger the workflow.
-- Push your changes to the `main` branch. This will start the workflow defined in `push-package.yml` and upload the package to Cloudsmith.
-- Check the Actions tab to verify the workflow ran and the package was pushed successfully.
 
 ## Task 3: Build and Push a Package Using GitHub Actions
 
