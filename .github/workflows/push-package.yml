@@ -29,4 +29,4 @@ jobs:
 
       - name: Push package to Cloudsmith
         run: |
-          cloudsmith push raw ${{ env.CLOUDSMITH_NAMESPACE }}/${{ env.CLOUDSMITH_REPO_NAME }} package.txt
+          cloudsmith push npm ${{ env.CLOUDSMITH_NAMESPACE }}/${{ env.CLOUDSMITH_REPO_NAME }} csm-cloudsmith-npm-cli-example-1.0.1.tgz
