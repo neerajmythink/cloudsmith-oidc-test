@@ -37,14 +37,14 @@ This section describes how to use the Cloudsmith GitHub Actions module to upload
 
 ## Task 3: Build and Push a Package Using GitHub Actions
 
-This section guides you through creating a package with GitHub Actions and uploading it to Cloudsmith.
+This section guides you through creating a package with GitHub Actions and uploading it to Cloudsmith. This task assumes you have a simple package (e.g., a Python package) in your repository and that OIDC authentication is configured as per Task 1.
 
 ### Steps to Build and Push a Package
 
-- Create a simple Python package in your repository (e.g., a `python_package` directory with a `pyproject.toml` and a module).
-- Add the necessary metadata to `pyproject.toml`.
-- Ensure OIDC and permissions are set up as in Task 1.
-- Make a small change to the package files to trigger the workflow.
-- Push your changes to the `main` branch. This will start the workflow in `build-push-package.yml`, build the package, and upload it to Cloudsmith.
-- View the Actions tab to confirm the package was built and pushed successfully.
+- Ensure you have a simple package (e.g., a Python_package) in your repository. For example, you can have a `pyproject.toml` file and a `src` directory with your sample Python code.
+- The workflow defined in `.github/workflows/build-and-push-package.yml` is set up to build the package and push it to Cloudsmith when triggered.
+- Make a minor edit to any file in the repository and push your changes to the `main` branch to trigger the workflow. This will start the workflow action, which will build the package (e.g., using `python -m build`) and upload it to Cloudsmith using the OIDC authentication configured in Task 1.
+- Check the Actions tab to verify the workflow ran successfully and the package was built and pushed to Cloudsmith. You can also log in to your Cloudsmith account and navigate to the repository to confirm that the package was uploaded correctly.
 
+## Conclusion
+By completing these tasks, you have successfully set up a GitHub project with OIDC authentication to securely interact with Cloudsmith. You have also learned how to use GitHub Actions to build and push packages to Cloudsmith, streamlining your CI/CD pipeline for package management.
