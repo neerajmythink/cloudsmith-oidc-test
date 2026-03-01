@@ -45,18 +45,17 @@ resource "cloudsmith_repository_privileges" "service_write_access" {
   }
 }
 
-# # 4. Create the OIDC Provider Configuration
-# resource "cloudsmith_oidc_provider" "github_oidc" {
-#   organization = var.organization
-#   name         = "github-actions-openid2"
-#   provider_url = "https://token.actions.githubusercontent.com"
-#   enabled      = true
+data "cloudsmith_organization" "org" {
+  slug = var.organization
+}
 
-#   # The claims restriction (JSON format)
-#   claims = {
-#     repository_owner = "neerajmythink"
-#   }
+# 4. Create the OIDC Provider Configuration
+resource "cloudsmith_oidc" "example" {
+  namespace        = var.organization
+  name             = "example-oidc-provider"
+  provider_url     = "https://token.actions.githubusercontent.com"
+  enabled          = true
+  claims           = { "repository_owner" : "neerajmythink" }
+  service_accounts = [cloudsmith_service.github_actions_service.slug]
+}
 
-#   # Link the service account created above
-#   service_accounts = [cloudsmith_service.github_actions_service.slug]
-# }
